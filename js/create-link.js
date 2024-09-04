@@ -22,6 +22,9 @@
     return;
 })();
 ;(function() {
+    // permalink 정보를 가져옵니다.
+    const permalinks = JSON.parse(document.getElementById('pagePermalinks').textContent);
+
     // 본문 전체의 vimwiki 링크를 html 링크로 변환한다.
     var post = document.querySelector('article.post-content');
 
@@ -30,12 +33,9 @@
     }
 
     (function iterate_node(node) {
-
         if (/^(?:p|ul|h\d|table)$/i.test(node.tagName)) {
-
             node.innerHTML = link(node.innerHTML);
-
-        } else { // Node.ELEMENT_NODE
+        } else {
             for (var i = 0; i < node.childNodes.length; i++) {
                 iterate_node(node.childNodes[i]);
             }
@@ -66,8 +66,18 @@
 
         // "[[document]]"가 있다면 <a href="/wiki/document">document</a> 와 같이 replace하여 링크를 만든다.
         //  예제는 (추가 타이틀 처리)와 거의 비슷하다.
-        content = content.replace(/\[\[\/?(.+?)\s*\]\]/g,
-            '<a href="/wiki/$1" class="inner-link no-labeled-link" data-name="$1">$1</a>');
+        // 원본 코드:
+        // content = content.replace(/\[\[\/?(.+?)\s*\]\]/g,
+        //     '<a href="/wiki/$1" class="inner-link no-labeled-link" data-name="$1">$1</a>');
+
+        // permalink 적용 버전:
+        content = content.replace(/\[\[\/?(.+?)\s*\]\]/g, function(match, p1) {
+            if (permalinks[p1]) {
+                return `<a href="${permalinks[p1]}" class="inner-link no-labeled-link" data-name="${p1}">${p1}</a>`;
+            } else {
+                return `<a href="/wiki/${p1}" class="inner-link no-labeled-link" data-name="${p1}">${p1}</a>`;
+            }
+        });
 
         // (주석처리)에서 이스케이프한 문자열을 본래 표현하려 한 형식으로 되돌린다.
         content = content.replace(/\\\[\\\[(.+?)\\\]\\\]/g, '[[$1]]');

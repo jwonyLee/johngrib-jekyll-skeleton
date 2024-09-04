@@ -223,6 +223,10 @@ function parseInfo(file, info) {
         fileName: file.path.replace(/^\.\/_wiki\/(.+)?\.md$/, '$1'),
         type: file.type,
         url: '',
+<<<<<<< HEAD
+=======
+        permalink: file.permalink,
+>>>>>>> 09fba0a (Add permalink)
         modified: fs.statSync(file.path).mtime
     };
 
@@ -243,10 +247,11 @@ function parseInfo(file, info) {
         obj[key] = val;
     });
 
-    if (file.type === 'blog') {
+    if (obj.permalink) {
+        obj.url = obj.permalink;
+    } else if (file.type === 'blog') {
         obj.url = '/blog/' + obj.date.replace(/^(\d{4})-(\d{2})-(\d{2}).*$/, '$1/$2/$3/');
         obj.url += obj.fileName.replace(/^.*[/]\d{4}-\d{2}-\d{2}-([^/]*)\.md$/, '$1');
-
     } else if (file.type === 'wiki') {
         obj.url = file.path
             .replace(/^\.\/_wiki/, '/wiki')

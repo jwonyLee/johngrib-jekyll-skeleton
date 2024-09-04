@@ -8,7 +8,16 @@
             .then(response => response.json())
             .then(function(data) {
                 const num = getRandomInt(0, data.length);
-                window.location.href = data[num];
+                let url = data[num];
+                
+                // URL이 '/'로 시작하지 않으면 '/'를 앞에 추가
+                if (!url.startsWith('/')) {
+                    url = `/${url}`;
+                }
+                
+                // 현재 페이지의 origin(프로토콜 + 도메인)을 사용하여 완전한 URL 구성
+                const fullUrl = new URL(url, window.location.origin).href;
+                window.location.href = fullUrl;
             })
             .catch(function(error) {
                 console.log(error);
