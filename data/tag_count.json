@@ -1,34 +1,10 @@
 [
  {
-  "name": "bot",
-  "size": 1
- },
- {
-  "name": "chatbot",
-  "size": 1
- },
- {
-  "name": "heroku",
-  "size": 1
- },
- {
   "name": "how-to",
   "size": 1
  },
  {
   "name": "latex",
   "size": 2
- },
- {
-  "name": "node-js",
-  "size": 1
- },
- {
-  "name": "telegram",
-  "size": 1
- },
- {
-  "name": "test",
-  "size": 1
  }
 ]

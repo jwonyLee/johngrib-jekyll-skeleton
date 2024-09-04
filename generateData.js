@@ -223,10 +223,7 @@ function parseInfo(file, info) {
         fileName: file.path.replace(/^\.\/_wiki\/(.+)?\.md$/, '$1'),
         type: file.type,
         url: '',
-<<<<<<< HEAD
-=======
         permalink: file.permalink,
->>>>>>> 09fba0a (Add permalink)
         modified: fs.statSync(file.path).mtime
     };
 
