@@ -1,5 +1,13 @@
 # Vimwiki + Jekyll + Github.io
 
+## 변경점
+
+- permalink 지원
+    - generateData.js 에서 permalink 를 파싱하는 구문 추가
+    - `_layouts/default.html`, `_layouts/document.html` 에서 wiki url 을 json 으로 추가
+    - `js/create-link.js` 에서 permalink 가 있는 경우와 없는 경우 처리 추가
+    - `js/shortcut.js` 에서 url 이 / 으로 시작하지 않는 경우(= permalink 인 경우) 처리 추가
+
 ## 시작하기
 
 블로그 스켈레톤을 fork 하세요.
