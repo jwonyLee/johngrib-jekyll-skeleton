@@ -1,5 +1,12 @@
+@import url('https://cdn.jsdelivr.net/gh/toss/tossface/dist/tossface.css');
+
 .blog-face {
     text-align: center;
+    font-family: Tossface;
+}
+
+.borderless {
+    border-bottom: 0px;
 }
 
 .indent {
@@ -9,17 +16,17 @@
 .contact {
     margin-top: 10px;
     text-align: center;
+
     a {
-        background: $theme-color;
-        color: #FFFFFF;
-        padding: 5px 10px;
+        font-family: "Pretendard", AppleSDGothicNeo, sans-serif;
         text-decoration: none;
-        border-radius: 8px;
+        margin: 8px;
+        color: #344B83;
         white-space: nowrap;
 
         &:hover {
             transition: background 0.3s ease;
-            background: #666;
+            background: $theme-color;
         }
     }
 }

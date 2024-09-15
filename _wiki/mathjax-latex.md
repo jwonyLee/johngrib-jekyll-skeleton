@@ -16,6 +16,70 @@ latex   : true
 
 [[how-to]] 로 이동해야 한다면? 하지만 [[test]]로 이동하고 싶을 수도 있잖아요
 
+```swift
+private var estimatedProgressObserver: NSKeyValueObservation?
+
+deinit {
+    estimatedProgressObserver = nil
+}
+
+override func viewDidLoad() {
+    super.viewDidLoad()
+    // 생략
+    estimatedProgressObserver = webView.observe(\.estimatedProgress, options: [.new]) { [weak self] _, change in
+        guard
+            let self = self,
+            let estimatedProgress: Double = change.newValue
+        else {
+            return
+        }
+        self.progressView.progress = Float(estimatedProgress)
+    }
+}
+```
+
+```typescript
+import {defineConfig} from '@playwright/test'
+// eslint-disable-next-line import/no-nodejs-modules
+import path from 'node:path'
+
+export default defineConfig({
+  testDir: 'e2e',
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0,
+  workers: process.env.CI ? 1 : undefined,
+  reporter: [
+    ['line'],
+    process.env.CI ? ['blob'] : ['html', {open: 'never', outputFolder: path.join(__dirname, '.playwright/report')}],
+    [
+      'json',
+      {
+        outputFile: path.join(__dirname, '.playwright', 'results.json'),
+      },
+    ],
+  ],
+
+  // https://playwright.dev/docs/api/class-testconfig#test-config-timeout
+  timeout: 1000 * 15,
+
+  // https://playwright.dev/docs/api/class-testconfig#test-config-output-dir
+  outputDir: path.join(__dirname, '.playwright', 'results'),
+  snapshotDir: path.join(__dirname, '.playwright', 'snapshots'),
+
+  use: {
+    baseURL: 'http://127.0.0.1:6006',
+    screenshot: 'only-on-failure',
+    viewport: {
+      // Large breakpoint
+      // @see https://primer.style/primitives/spacing#breakpoints
+      width: 1012,
+      height: 768,
+    },
+  },
+})
+```
+
 ## 개요
 
 자신의 웹 페이지에서 LaTeX를 사용하고 싶다면 MathJax에서 제공하는 자바스크립트 라이브러리를 쓰면 된다.

@@ -11,8 +11,9 @@ $forth-font-color : #808094;
 $small-font-size   : $default-font-size * 0.8;
 $base-line-height  : 1.5;
 
-$coding-font: Consolas, "Courier New", Courier;
-$theme-color: #47146C;
+$coding-font: --fontStack-monospace, ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+// $theme-color: #ffcc00;
+$theme-color: #ffc43a;
 
 // Import from 'sass_dir' (default: _sass)
 @import

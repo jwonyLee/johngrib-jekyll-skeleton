@@ -10,15 +10,27 @@ latex: true
 
 <div class="contact">
 {% if site.github_username %}
-        <a href="https://github.com/{{ site.github_username }}">GitHub</a>
+        <a href="https://github.com/{{ site.github_username }}">
+            <span class="emoji">💻</span>
+            <span>GitHub</span>
+        </a>
 {% endif %}
 {% if site.twitter_username %}
-        <a href="https://twitter.com/{{ site.twitter_username }}">Twitter</a>
+        <a href="https://twitter.com/{{ site.twitter_username }}">
+            <span class="emoji">🪶</span>
+            <span>Twitter</span>
+        </a>
 {% endif %}
 {% if site.email %}
-        <a href="mailto:{{ site.email }}">Email</a>
+        <a href="mailto:{{ site.email }}">
+            <span class="emoji">📧</span>
+            <span>Email</span>
+        </a>
 {% endif %}
-        <a href="{{ "/feed.xml" | prepend: site.baseurl }}">RSS</a>
+        <a href="{{ "/feed.xml" | prepend: site.baseurl }}">
+            <span class="emoji">📢</span>
+            <span>RSS</span>
+        </a>
 </div>
 
 ## Motto
