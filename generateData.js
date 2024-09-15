@@ -53,6 +53,7 @@ function main() {
                     updated: page.updated || page.date,
                     resource: page.resource,
                     children: [],
+                    fileName: page.fileName
                 };
         });
 
@@ -71,6 +72,7 @@ function main() {
     saveTagCount(tagMap);
     saveMetaDataFiles(pageMap);
     saveDocumentUrlList(pageMap);
+    saveMatchedPermalinkList(pageMap)
 }
 
 function lexicalOrderingBy(property) {
@@ -178,6 +180,32 @@ function saveDocumentUrlList(pageMap) {
         urlList.push(data.url);
     }
     saveToFile("./data/total-document-url-list.json", JSON.stringify(urlList, null, 1), PRINT);
+}
+
+/**
+ * UUID 형식인지 검사합니다.
+ */
+function isValidUUID(uuid) {
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    return uuidRegex.test(uuid);
+}
+
+/**
+ * fileName 과 permalink 를 1:1 매칭하는 목록 json 파일을 생성합니다.
+ */
+function saveMatchedPermalinkList(pageMap) {
+    const matchedList = {};
+
+    for (const key in pageMap) {
+        if (pageMap.hasOwnProperty(key)) {
+            const page = pageMap[key];
+            if (isValidUUID(page.url)) {
+                matchedList[page.fileName] = page.url;
+            }
+        }
+    }
+
+    saveToFile("./data/total-matched-permalink.json", JSON.stringify(matchedList, null, 2), PRINT);
 }
 
 /**

@@ -104,7 +104,7 @@
         }
         const target = item.getAttribute('data-name')
             .replace(/#.*$/, '');
-
+    
         let status = undefined;
         fetch(`/data/metadata/${target}.json`)
             .then(response => {
@@ -119,9 +119,46 @@
                 return;
             })
             .catch(function(error) {
+                console.log(`Failed to fetch metadata for ${target}:`, error);
+                fetchMatchedPermalink(target, item, status);
+            });
+    }
+    
+    function fetchMatchedPermalink(target, item, status) {
+        fetch('/data/total-matched-permalink.json')
+            .then(response => response.json())
+            .then(function(matchedData) {
+                const matchedPermalink = matchedData[target];
+    
+                if (matchedPermalink) {
+                    fetchMetadata(matchedPermalink, item);
+                } else {
+                    item.classList.add('broken-link');
+                    item.innerHTML += `<sub class="link-${status}"></sub>`;
+                    console.log(`No matched permalink found for ${target}`, status);
+                }
+            })
+            .catch(function(error) {
+                console.error('Failed to fetch total-matched-permalink.json:', error);
                 item.classList.add('broken-link');
-                item.innerHTML += `<sub class="link-${status}"></sub>`
-                console.log(target, status);
+                item.innerHTML += `<sub class="link-${status}"></sub>`;
+            });
+    }
+    
+    function fetchMetadata(target, item) {
+        fetch(`/data/metadata/${target}.json`)
+            .then(response => response.json())
+            .then(function(data) {
+                if (data == null) {
+                    return;
+                }
+                item.innerText = data.title;
+                return;
+            })
+            .catch(function(error) {
+                console.error(`Failed to fetch metadata for ${target}:`, error);
+                item.classList.add('broken-link');
+                item.innerHTML += `<sub class="link-${response.status}"></sub>`;
             });
     }
 })();

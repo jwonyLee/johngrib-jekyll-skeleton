@@ -8,5 +8,6 @@
  "children": [
   "mathjax-latex",
   "test"
- ]
+ ],
+ "fileName": "how-to"
 }
